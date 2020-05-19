@@ -154,6 +154,5 @@ if __name__ == '__main__':
         #  Ask user if they want to play again
         play_again = valid_input("Would you like to play again (y/n)?",
                                  ["y", "n"])
-        _ = system('cls')
         if play_again == "n":
             break
