@@ -7,6 +7,7 @@ from os import system
 moves = ['rock', 'paper', 'scissors']
 
 
+# Checks user input value (prompt) against acceptable values (options)
 def valid_input(prompt, options):
     while True:
         response = input(prompt).lower()
@@ -25,6 +26,7 @@ class Player:
         pass
 
 
+# Subclass whose move method makes a random choice
 class RandomPlayer(Player):
     def move(self):
         return random.choice(moves)
@@ -33,6 +35,7 @@ class RandomPlayer(Player):
         pass
 
 
+# Subclass whose move method asks the human user what move to make
 class HumanPlayer(Player):
     def move(self):
         response = valid_input("Player 1: Rock, Paper, or Scissors? > ", moves)
@@ -42,6 +45,7 @@ class HumanPlayer(Player):
         pass
 
 
+# Subclass whose move method remembers what move the HumanPlayer played last round, and plays that move this round
 class ReflectPlayer(Player):
     def move(self):
         if self.their_move is None:
@@ -53,6 +57,7 @@ class ReflectPlayer(Player):
         self.their_move = their_move
 
 
+# Subclass whose move mehtod remembers what move it played last round, and cycles through the different moves
 class CyclePlayer(Player):
     def move(self):
         if self.my_move is None:
@@ -68,16 +73,19 @@ class CyclePlayer(Player):
         self.my_move = my_move
 
 
+# Logic for determining winner
 def beats(one, two):
     return ((one == 'rock' and two == 'scissors') or
             (one == 'scissors' and two == 'paper') or
             (one == 'paper' and two == 'rock'))
 
 
+# Prints the current score
 def score(score1, score2):
     print(f"Score: Player One {score1}, Player Two {score2}\n")
 
 
+# Prints the final score
 def final_score(score1, score2):
     print("** FINAL SCORE **")
     print(f"** PLAYER 1: {score1}     PLAYER 2: {score2} **\n")
@@ -90,6 +98,7 @@ class Game:
         self.score1 = 0
         self.score2 = 0
 
+    # Code for one round
     def play_round(self):
         move1 = self.p1.move()
         move2 = self.p2.move()
@@ -109,6 +118,7 @@ class Game:
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
+    # Game plays through 3 rounds
     def play_game(self):
         print("Game start!")
         for round in range(3):
@@ -129,6 +139,7 @@ class Game:
 
 if __name__ == '__main__':
     while True:
+        # Allow user to choose opponent type
         opponent = valid_input("What type of player do you want to play with "
                                "(Random, Reflect, or Cycle)? > ",
                                ["random", "reflect", "cycle"])
@@ -140,6 +151,7 @@ if __name__ == '__main__':
             player_type = CyclePlayer()
         game = Game(HumanPlayer(), player_type)
         game.play_game()
+        #  Ask user if they want to play again
         play_again = valid_input("Would you like to play again (y/n)?",
                                  ["y", "n"])
         _ = system('cls')
