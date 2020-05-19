@@ -20,7 +20,7 @@ class Player:
     their_move = None
 
     def move(self):
-        return 'rock'
+        return moves[0]
 
     def learn(self, my_move, their_move):
         pass
